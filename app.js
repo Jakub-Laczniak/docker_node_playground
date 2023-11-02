@@ -1,25 +1,27 @@
-const http = require('http');
-const fs = require('fs');
-const { numArr } = require('./people')
-const _ = require('lodash');
+// const fs = require('fs');
+const express = require('express');
+const app = express();
 
-const server = http.createServer((req, res) => {
-    res.setHeader('Content-Type', 'text/html')
-    fs.readFile('./files/index.html', (err, data) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.write(data);
-            res.write('<h1>test</h1>');
-            res.write(`${_.random(0, 16)}`)
-            res.end();
-        }
-    })
-    const test = _.once(() => {console.log('test')});
-    test()
-});
+// view engine
+app.set('view engine', 'ejs');
 
-server.listen(8080, '', () => {
-    console.log('listenting for requests on port 8080');
-    console.log(_.chunk(numArr, 3))
+
+// listen for the requests
+app.listen(8080);
+
+app.get('/', (req, res) => {
+    res.render('index')
+    // res.sendFile('./views/index.ejs', { root: __dirname })
 });
+app.get('/about', (req, res) => {
+    res.render('about')
+    // res.sendFile('./views/about.ejs', { root: __dirname })
+});
+// app.get('/about-us', (req, res) => {
+    // res.redirect('/about')
+// });
+app.use((req, res) => {
+    res.render('404')
+    // res.sendFile('./views/404.ejs', { root: __dirname })
+})
+ 
