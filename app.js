@@ -4,7 +4,8 @@ const app = express();
 
 // view engine
 app.set('view engine', 'ejs');
-
+// here I'm changing default folder for the views. "views" name is default 
+app.set('views', `${__dirname}/my_views`);
 
 // listen for the requests
 app.listen(8080);
